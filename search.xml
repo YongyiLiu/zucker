@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[aboutme]]></title>
-    <url>%2F2017%2F07%2F23%2Faboutme%2F</url>
-    <content type="text"></content>
-  </entry>
-  <entry>
-    <title></title>
+    <title><![CDATA[kubebetes部署搭建]]></title>
     <url>%2F2017%2F07%2F23%2Fk8s%2F</url>
-    <content type="text"><![CDATA[title: kubebetes部署搭建date: 2017-07-23 00:04:58tags: 容器categories: 虚拟容器 教程]]></content>
-  </entry>
-  <entry>
-    <title><![CDATA[Hello World]]></title>
-    <url>%2F2017%2F07%2F22%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
+    <content type="text"><![CDATA[教程]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+        <tag>test</tag>
+      </tags>
   </entry>
 </search>
