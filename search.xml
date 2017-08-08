@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[支付渠道架构]]></title>
     <url>%2F2017%2F07%2F31%2Fpay%2F</url>
-    <content type="text"><![CDATA[###注意的坑1.请求设置超时2.状态码设计：首先以业务结果码为准，在业务结果为失败时，再去检查明细错误码。 ##推荐文档支付网关的设计支付系统整体架构大众点评支付渠道网关系统的实践之路去哪儿网支付系统架构演进]]></content>
+    <content type="text"><![CDATA[支付系统重构 注意的坑1.请求设置超时2.状态码设计：首先以业务结果码为准，在业务结果为失败时，再去检查明细错误码。 推荐文档支付网关的设计支付系统整体架构大众点评支付渠道网关系统的实践之路去哪儿网支付系统架构演进]]></content>
       <categories>
         <category>chonggou</category>
       </categories>
