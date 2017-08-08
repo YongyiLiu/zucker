@@ -107,7 +107,7 @@
 <meta property="og:site_name" content="zucker团队博客">
 <meta property="og:description" content="kubernetes拥有并行启动，自动扩容，有差别的批量处理和服务生命周期，负载均衡等特性. 下文将介绍k8s(kubernetes)的手动部署过程，更好地了解和学习k8s各个组件。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-07-27T09:11:08.000Z">
+<meta property="og:updated_time" content="2017-08-08T11:53:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于Ubuntu上kubebetes搭建">
 <meta name="twitter:description" content="kubernetes拥有并行启动，自动扩容，有差别的批量处理和服务生命周期，负载均衡等特性. 下文将介绍k8s(kubernetes)的手动部署过程，更好地了解和学习k8s各个组件。">
@@ -379,7 +379,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/docker/" itemprop="url" rel="index">
+                  <a href="/categories/应用容器/" itemprop="url" rel="index">
                     <span itemprop="name">docker</span>
                   </a>
                 </span>
@@ -427,9 +427,10 @@
         <p>kubernetes拥有并行启动，自动扩容，有差别的批量处理和服务生命周期，负载均衡等特性.</p>
 <p>下文将介绍k8s(kubernetes)的手动部署过程，更好地了解和学习k8s各个组件。</p>
 <a id="more"></a>
-<h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><p>这里准备的Ubuntu必须Ubuntu 16.04.2以上，因为k8s需要最低的版本为Ubuntu 16 以上.其中kuberneter的版本为1.7.1</p>
+<h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><p>这里准备的Ubuntu必须Ubuntu 16.04.2以上，因为k8s需要最低的版本为Ubuntu 16.04以上.其中kuberneter的版本为1.7.1。</p>
+<p><em>注意：etcd 必须3.0版本以上，因为kuber-apiserver默认的ectd配置是3.0版本，不然需要手动指定</em></p>
 <p>下文安装k8s必须有三台机器，分别为master、node1和node2,分别对应的ip为：192.168.56.101、192.168.56.102和192.168.56.103</p>
-<h2 id="通过vagrant快速安装虚拟机"><a href="#通过vagrant快速安装虚拟机" class="headerlink" title="通过vagrant快速安装虚拟机"></a>通过vagrant快速安装虚拟机</h2><p>下面介绍的是在mac环境中，通过brew命令安装虚拟机的过程，如果mac里面没有安装brew的话，可以参考brew官方文档去安装，在此就不作详细介绍。对于其他环境请到其他官方网站下载进行安装。</p>
+<h2 id="通过vagrant快速安装虚拟机（暂不建议采用这种方式，因为后期修改虚拟机配置文件后，会导致ssh连接不上去）"><a href="#通过vagrant快速安装虚拟机（暂不建议采用这种方式，因为后期修改虚拟机配置文件后，会导致ssh连接不上去）" class="headerlink" title="通过vagrant快速安装虚拟机（暂不建议采用这种方式，因为后期修改虚拟机配置文件后，会导致ssh连接不上去）"></a>通过vagrant快速安装虚拟机（暂不建议采用这种方式，因为后期修改虚拟机配置文件后，会导致ssh连接不上去）</h2><p>下面介绍的是在mac环境中，通过brew命令安装虚拟机的过程，如果mac里面没有安装brew的话，可以参考brew官方文档去安装，在此就不作详细介绍。对于其他环境请到其他官方网站下载进行安装。</p>
 <p>1.安装Virtualbox</p>
 <p>可以通过一下命令安装Virtualbox</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew cask install virtualbox</div></pre></td></tr></table></figure>
@@ -453,7 +454,7 @@
 <h2 id="etcd配置"><a href="#etcd配置" class="headerlink" title="etcd配置"></a>etcd配置</h2><p><em>统一在三台机器上切换到root用户下进行配置</em></p>
 <p>1.下载etcd</p>
 <p>依次在三台机器上面下载etcd，并进行解压</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">ETCD_VERSION=<span class="variable">$&#123;ETCD_VERSION:-"2.3.1"&#125;</span></div><div class="line">ETCD=<span class="string">"etcd-v<span class="variable">$&#123;ETCD_VERSION&#125;</span>-linux-amd64"</span></div><div class="line">curl -L https://github.com/coreos/etcd/releases/download/v<span class="variable">$&#123;ETCD_VERSION&#125;</span>/<span class="variable">$&#123;ETCD&#125;</span>.tar.gz -o etcd.tar.gz</div><div class="line"></div><div class="line">tar xzf etcd.tar.gz -C /tmp</div><div class="line">mv /tmp/etcd-v<span class="variable">$&#123;ETCD_VERSION&#125;</span>-linux-amd64 /opt/bin/</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">ETCD_VERSION=<span class="variable">$&#123;ETCD_VERSION:-"3.2.5"&#125;</span></div><div class="line">ETCD=<span class="string">"etcd-v<span class="variable">$&#123;ETCD_VERSION&#125;</span>-linux-amd64"</span></div><div class="line">curl -L https://github.com/coreos/etcd/releases/download/v<span class="variable">$&#123;ETCD_VERSION&#125;</span>/<span class="variable">$&#123;ETCD&#125;</span>.tar.gz -o etcd.tar.gz</div><div class="line"></div><div class="line">tar xzf etcd.tar.gz -C /tmp</div><div class="line">mv /tmp/etcd-v<span class="variable">$&#123;ETCD_VERSION&#125;</span>-linux-amd64 /opt/bin/</div></pre></td></tr></table></figure>
 <p>2.配置ectd<br>在每台机器上面创建/opt/config/etcd.conf和/lib/systemd/system/etcd.service文件并进行一下配置，</p>
 <p>先新建config文件</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo mkdir -p /var/lib/etcd/</div><div class="line">sudo mkdir -p /opt/config/</div></pre></td></tr></table></figure>
@@ -483,9 +484,14 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/opt/bin/etcdctl <span class="built_in">set</span> /coreos.com/network/config <span class="string">'&#123;"Network":"10.1.0.0/16", "Backend": &#123;"Type": "vxlan"&#125;&#125;'</span></div><div class="line">/opt/bin/etcdctl get /coreos.com/network/config</div></pre></td></tr></table></figure>
 <p>进行启动和测试:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">systemctl daemon-reload</div><div class="line">systemctl <span class="built_in">enable</span> flanneld</div><div class="line">systemctl start flanneld</div></pre></td></tr></table></figure>
-<h2 id="docker-配置"><a href="#docker-配置" class="headerlink" title="docker 配置"></a>docker 配置</h2><p>配置docker,必须保证docker环境已经安装好，可参考<a href="https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/#install-using-the-repository" target="_blank" rel="external">docker在Ubuntu安装教程</a><br>1.配置</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">source</span> /run/flannel/subnet.env</div><div class="line"></div><div class="line">sudo sed -i <span class="string">"s|^ExecStart=/usr/bin/dockerd -H fd://$|ExecStart=/usr/bin/dockerd -H tcp://127.0.0.1:4243 -H unix:///var/run/docker.sock --bip=<span class="variable">$&#123;FLANNEL_SUBNET&#125;</span> --mtu=<span class="variable">$&#123;FLANNEL_MTU&#125;</span>|g"</span> /lib/systemd/system/docker.service</div><div class="line">rc=0</div><div class="line">ip link show docker0 &gt;/dev/null 2&gt;&amp;1 || rc=<span class="string">"$?"</span></div><div class="line"><span class="keyword">if</span> [[ <span class="string">"<span class="variable">$rc</span>"</span> -eq <span class="string">"0"</span> ]]; <span class="keyword">then</span></div><div class="line">ip link <span class="built_in">set</span> dev docker0 down</div><div class="line">ip link delete docker0</div><div class="line"><span class="keyword">fi</span></div></pre></td></tr></table></figure>
-<p>2.启动和测试<br><strong>启动</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">systemctl daemon-reload</div><div class="line">systemctl <span class="built_in">enable</span> docker</div><div class="line">systemctl restart docker</div></pre></td></tr></table></figure></p>
+<h2 id="docker-配置"><a href="#docker-配置" class="headerlink" title="docker 配置"></a>docker 配置</h2><p>配置docker,必须保证docker环境已经安装好，可参考<a href="https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/#install-using-the-repository" target="_blank" rel="external">docker在Ubuntu安装教程</a></p>
+<p>1.配置</p>
+<p>找到flanneld解压出来的mk-docker-opts.sh复制到/user/bin/文件夹下面，并在每台主机执行以下命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mk-docker-opts.sh -i</div><div class="line"><span class="built_in">source</span> /run/flannel/subnet.env</div><div class="line">ifconfig docker0 <span class="variable">$&#123;FLANNEL_SUBNET&#125;</span></div></pre></td></tr></table></figure></p>
+<p>为了持久化配置信息，需要在lib/systemd/system/docker.service的EnvironmentFile和ExecStart变量替换下面配置信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">EnvironmentFile=/var/run/flannel/subnet.env</div><div class="line">ExecStart=/usr/bin/dockerd -g /data/docker  --bip=<span class="variable">$&#123;FLANNEL_SUBNET&#125;</span> --mtu=<span class="variable">$&#123;FLANNEL_MTU&#125;</span></div><div class="line">ExecReload=/bin/<span class="built_in">kill</span> -s HUP <span class="variable">$MAINPID</span></div></pre></td></tr></table></figure>
+<p>2.重置iptables（针对master主机）</p>
+<p>为了避免iptable规则的限制，导致主机容器之间ping不通，需要重置iptables规则<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">iptables -F</div><div class="line">iptables -X</div><div class="line">iptables -Z</div><div class="line">iptables -P INPUT ACCEPT</div><div class="line">iptables -P OUTPUT ACCEPT</div><div class="line">iptables -P FORWARD ACCEPT</div></pre></td></tr></table></figure></p>
+<p>3.启动和测试<br><strong>启动</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">systemctl daemon-reload</div><div class="line">systemctl <span class="built_in">enable</span> docker</div><div class="line">systemctl restart docker</div></pre></td></tr></table></figure></p>
 <p><strong>测试</strong></p>
 <p>最简单的方法是：在不同的主机上面启动两个容器，然后在容器里面进行ping操作</p>
 <h2 id="master配置"><a href="#master配置" class="headerlink" title="master配置"></a>master配置</h2><p>在master配置中涉及kube-apiserver、kuber-controller和kuber-scheduler三个组件的配置</p>
@@ -563,7 +569,13 @@
 <p><strong>解决方案：</strong><br>原来users元素中的name的值为server，而context中的user配置值为Ubuntu，因此，一直拿不到ubutux用户的秘钥信息。将server改为Ubuntu（注意这个文件的里面的层级关系）</p>
 <p>2.在配置dns，API server一直反复提示：invalid token信息？</p>
 <p><strong>解决方案：</strong><br>查阅了相关资料发现，API server认证过程中涉及的Pod涉及三个文件分别是token、ca.crt和namespace。因为之前在配置过程生成错误证书，也生成错误token；在配置好正确的证书后，API server依然沿用旧的token，因此将旧的token删除后，重试就ok.</p>
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p> <a href="http://www.linuxidc.com/Linux/2017-02/140555.htm" target="_blank" rel="external">手动部署kubernetes</a><br> <a href="https://coreos.com/kubernetes/docs/latest/configure-kubectl.html" target="_blank" rel="external">kubectl客户端配置</a><br> <a href="https://github.com/kubernetes/kubernetes/tree/release-1.7/cluster/addons/dns" target="_blank" rel="external">dns</a></p>
+<h2 id="安装配置一点点经验"><a href="#安装配置一点点经验" class="headerlink" title="安装配置一点点经验"></a>安装配置一点点经验</h2><p>在手动安装kubernetes集群的时候，很多时候会遇到各种坑各种问题，根据问题去搜索的时候很难能寻找到答案。这时候可以通过以下进行排查：</p>
+<p>1.查看相关日志进行排查</p>
+<p>2.重新核对配置文件的配置信息</p>
+<p>3.阅读配置相关参数的意义，很多时候配置参数有相关规则，需要根据指定的规则去设置，不然很多问题都难以解决</p>
+<p>4.建议看官方文档，这是较为靠谱的做法，官方文档也有相关配置说明</p>
+<p>5.实在解决不了，只能直接看源码，根据报错日志进行追溯“问题源头”</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p> <a href="http://www.linuxidc.com/Linux/2017-02/140555.htm" target="_blank" rel="external">手动部署kubernetes</a><br> <a href="https://coreos.com/kubernetes/docs/latest/configure-kubectl.html" target="_blank" rel="external">kubectl客户端配置</a><br> <a href="https://github.com/kubernetes/kubernetes/tree/release-1.7/cluster/addons/dns" target="_blank" rel="external">dns</a><br> <a href="https://www.hi-linux.com/posts/30481.html" target="_blank" rel="external">flannel原理简析及安装</a></p>
 
       
     </div>
@@ -595,7 +607,7 @@
           
             <a href="/tags/kubernetes/" rel="tag"># kubernetes</a>
           
-            <a href="/tags/cluster/" rel="tag"># cluster</a>
+            <a href="/tags/分布式集群/" rel="tag"># cluster</a>
           
         </div>
       
@@ -696,7 +708,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -707,7 +719,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -718,7 +730,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -778,7 +790,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前期准备"><span class="nav-number">1.</span> <span class="nav-text">前期准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过vagrant快速安装虚拟机"><span class="nav-number">2.</span> <span class="nav-text">通过vagrant快速安装虚拟机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#etcd配置"><span class="nav-number">3.</span> <span class="nav-text">etcd配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#flanneld配置"><span class="nav-number">4.</span> <span class="nav-text">flanneld配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-配置"><span class="nav-number">5.</span> <span class="nav-text">docker 配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#master配置"><span class="nav-number">6.</span> <span class="nav-text">master配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#node节点配置"><span class="nav-number">7.</span> <span class="nav-text">node节点配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kubectl客户端配置与测试kubernete集群"><span class="nav-number">8.</span> <span class="nav-text">kubectl客户端配置与测试kubernete集群</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#证书生成"><span class="nav-number">9.</span> <span class="nav-text">证书生成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户认证配置"><span class="nav-number">10.</span> <span class="nav-text">用户认证配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dns配置"><span class="nav-number">11.</span> <span class="nav-text">dns配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遇过的那些坑"><span class="nav-number">12.</span> <span class="nav-text">遇过的那些坑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">13.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前期准备"><span class="nav-number">1.</span> <span class="nav-text">前期准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过vagrant快速安装虚拟机（暂不建议采用这种方式，因为后期修改虚拟机配置文件后，会导致ssh连接不上去）"><span class="nav-number">2.</span> <span class="nav-text">通过vagrant快速安装虚拟机（暂不建议采用这种方式，因为后期修改虚拟机配置文件后，会导致ssh连接不上去）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#etcd配置"><span class="nav-number">3.</span> <span class="nav-text">etcd配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#flanneld配置"><span class="nav-number">4.</span> <span class="nav-text">flanneld配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-配置"><span class="nav-number">5.</span> <span class="nav-text">docker 配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#master配置"><span class="nav-number">6.</span> <span class="nav-text">master配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#node节点配置"><span class="nav-number">7.</span> <span class="nav-text">node节点配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kubectl客户端配置与测试kubernete集群"><span class="nav-number">8.</span> <span class="nav-text">kubectl客户端配置与测试kubernete集群</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#证书生成"><span class="nav-number">9.</span> <span class="nav-text">证书生成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户认证配置"><span class="nav-number">10.</span> <span class="nav-text">用户认证配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dns配置"><span class="nav-number">11.</span> <span class="nav-text">dns配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遇过的那些坑"><span class="nav-number">12.</span> <span class="nav-text">遇过的那些坑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装配置一点点经验"><span class="nav-number">13.</span> <span class="nav-text">安装配置一点点经验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">14.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
             
 
           </div>

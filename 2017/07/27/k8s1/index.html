@@ -99,18 +99,18 @@
 
 
 
-<meta name="description" content="Think big,but start small.">
+<meta name="description" content="kubectl get eventskubectl get pods -l run=my-nginx -o widekubectl describe svc pod rckubectl clusterinfo dumpkubectl get deploy kube-dns -o yamlkubectl taint 192.168.56.101 kubectl config use-context">
 <meta name="keywords" content="kubernetes,cluster">
 <meta property="og:type" content="article">
 <meta property="og:title" content="k8s相关命令">
 <meta property="og:url" content="http://zucker.com.cn/2017/07/27/k8s1/index.html">
 <meta property="og:site_name" content="zucker团队博客">
-<meta property="og:description" content="Think big,but start small.">
+<meta property="og:description" content="kubectl get eventskubectl get pods -l run=my-nginx -o widekubectl describe svc pod rckubectl clusterinfo dumpkubectl get deploy kube-dns -o yamlkubectl taint 192.168.56.101 kubectl config use-context">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-07-27T09:10:32.000Z">
+<meta property="og:updated_time" content="2017-07-28T10:39:48.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="k8s相关命令">
-<meta name="twitter:description" content="Think big,but start small.">
+<meta name="twitter:description" content="kubectl get eventskubectl get pods -l run=my-nginx -o widekubectl describe svc pod rckubectl clusterinfo dumpkubectl get deploy kube-dns -o yamlkubectl taint 192.168.56.101 kubectl config use-context">
 
 
 
@@ -379,7 +379,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/docker/" itemprop="url" rel="index">
+                  <a href="/categories/应用容器/" itemprop="url" rel="index">
                     <span itemprop="name">docker</span>
                   </a>
                 </span>
@@ -424,7 +424,12 @@
       
 
       
-        
+        <p>kubectl get events<br>kubectl get pods -l run=my-nginx -o wide<br>kubectl describe svc pod rc<br>kubectl clusterinfo dump<br>kubectl get deploy kube-dns -o yaml<br>kubectl taint 192.168.56.101</p>
+<p>kubectl config use-context default-system</p>
+<p>kubectl get current-context<br>kubectl get current-cluster<br>kubectl delete deploy kube-dns</p>
+<p>  kubectl get sa<br> 3936  kubectl get sa kube-dns<br> 3937  kubectl get sa kube-dns -o yaml</p>
+<p> kubectl logs kube-dns-3097350089-c06sx kubedns </p>
+
       
     </div>
 
@@ -455,7 +460,7 @@
           
             <a href="/tags/kubernetes/" rel="tag"># kubernetes</a>
           
-            <a href="/tags/cluster/" rel="tag"># cluster</a>
+            <a href="/tags/分布式集群/" rel="tag"># cluster</a>
           
         </div>
       
@@ -477,6 +482,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/31/pay/" rel="prev" title="支付渠道架构">
+                支付渠道架构 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -547,7 +556,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -558,7 +567,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -569,7 +578,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

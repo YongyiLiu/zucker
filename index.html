@@ -327,6 +327,153 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://zucker.com.cn/2017/07/31/pay/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zucker团队">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/zucker.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zucker团队博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/31/pay/" itemprop="url">支付渠道架构</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-31T17:29:32+08:00">
+                2017-07-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/重构/" itemprop="url" rel="index">
+                    <span itemprop="name">chonggou</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/07/31/pay/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/07/31/pay/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <a id="more"></a>
+<p>###注意的坑<br>1.请求设置超时<br>2.状态码设计：首先以业务结果码为准，在业务结果为失败时，再去检查明细错误码。<br>3.</p>
+<p>##推荐文档<br><a href="http://www.woshipm.com/pd/450345.html" target="_blank" rel="external">支付网关的设计</a><br><a href="http://blog.lixf.cn/essay/2016/08/08/payment-arch/" target="_blank" rel="external">支付系统整体架构</a><br><a href="https://tech.meituan.com/The-Practice-of-Dianping-Channel-Gateway.html" target="_blank" rel="external">大众点评支付渠道网关系统的实践之路</a><br><a href="http://www.infoq.com/cn/articles/evolution-of-qunar-payment-system-architecture-" target="_blank" rel="external">去哪儿网支付系统架构演进</a><br><a href=""></a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://zucker.com.cn/2017/07/27/k8s1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -381,7 +528,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/docker/" itemprop="url" rel="index">
+                  <a href="/categories/应用容器/" itemprop="url" rel="index">
                     <span itemprop="name">docker</span>
                   </a>
                 </span>
@@ -428,7 +575,12 @@
       
         
           
-            
+            <p>kubectl get events<br>kubectl get pods -l run=my-nginx -o wide<br>kubectl describe svc pod rc<br>kubectl clusterinfo dump<br>kubectl get deploy kube-dns -o yaml<br>kubectl taint 192.168.56.101</p>
+<p>kubectl config use-context default-system</p>
+<p>kubectl get current-context<br>kubectl get current-cluster<br>kubectl delete deploy kube-dns</p>
+<p>  kubectl get sa<br> 3936  kubectl get sa kube-dns<br> 3937  kubectl get sa kube-dns -o yaml</p>
+<p> kubectl logs kube-dns-3097350089-c06sx kubedns </p>
+
           
         
       
@@ -525,7 +677,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/docker/" itemprop="url" rel="index">
+                  <a href="/categories/应用容器/" itemprop="url" rel="index">
                     <span itemprop="name">docker</span>
                   </a>
                 </span>
@@ -658,7 +810,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -669,7 +821,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -680,7 +832,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
