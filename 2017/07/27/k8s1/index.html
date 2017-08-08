@@ -99,18 +99,18 @@
 
 
 
-<meta name="description" content="kubectl get eventskubectl get pods -l run=my-nginx -o widekubectl describe svc pod rckubectl clusterinfo dumpkubectl get deploy kube-dns -o yamlkubectl taint 192.168.56.101 kubectl config use-context">
+<meta name="description" content="k8s高级命令">
 <meta name="keywords" content="kubernetes,cluster">
 <meta property="og:type" content="article">
 <meta property="og:title" content="k8s相关命令">
 <meta property="og:url" content="http://zucker.com.cn/2017/07/27/k8s1/index.html">
 <meta property="og:site_name" content="zucker团队博客">
-<meta property="og:description" content="kubectl get eventskubectl get pods -l run=my-nginx -o widekubectl describe svc pod rckubectl clusterinfo dumpkubectl get deploy kube-dns -o yamlkubectl taint 192.168.56.101 kubectl config use-context">
+<meta property="og:description" content="k8s高级命令">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-07-28T10:39:48.000Z">
+<meta property="og:updated_time" content="2017-08-08T12:06:07.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="k8s相关命令">
-<meta name="twitter:description" content="kubectl get eventskubectl get pods -l run=my-nginx -o widekubectl describe svc pod rckubectl clusterinfo dumpkubectl get deploy kube-dns -o yamlkubectl taint 192.168.56.101 kubectl config use-context">
+<meta name="twitter:description" content="k8s高级命令">
 
 
 
@@ -424,12 +424,8 @@
       
 
       
-        <p>kubectl get events<br>kubectl get pods -l run=my-nginx -o wide<br>kubectl describe svc pod rc<br>kubectl clusterinfo dump<br>kubectl get deploy kube-dns -o yaml<br>kubectl taint 192.168.56.101</p>
-<p>kubectl config use-context default-system</p>
-<p>kubectl get current-context<br>kubectl get current-cluster<br>kubectl delete deploy kube-dns</p>
-<p>  kubectl get sa<br> 3936  kubectl get sa kube-dns<br> 3937  kubectl get sa kube-dns -o yaml</p>
-<p> kubectl logs kube-dns-3097350089-c06sx kubedns </p>
-
+        <p>k8s高级命令<br><a id="more"></a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">kubectl get events</div><div class="line">kubectl get pods -l run=my-nginx -o wide</div><div class="line">kubectl describe svc pod rc</div><div class="line">kubectl clusterinfo dump</div><div class="line">kubectl get deploy kube-dns -o yaml</div><div class="line">kubectl taint 192.168.56.101</div><div class="line">kubectl config use-context default-system</div><div class="line">kubectl get current-context</div><div class="line">kubectl get current-cluster</div><div class="line">kubectl delete deploy kube-dns</div><div class="line">kubectl get sa</div><div class="line">kubectl get sa kube-dns</div><div class="line">kubectl get sa kube-dns -o yaml</div><div class="line">kubectl logs kube-dns-3097350089-c06sx kubedns</div></pre></td></tr></table></figure>
       
     </div>
 
@@ -617,6 +613,10 @@
               
                 <li class="links-of-blogroll-item">
                   <a href="http://xiongyingqi.com/" title="琪琪博客" target="_blank">琪琪博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://yecker.com.cn/" title="Yecker博客" target="_blank">Yecker博客</a>
                 </li>
               
             </ul>
