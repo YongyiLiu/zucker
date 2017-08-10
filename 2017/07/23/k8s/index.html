@@ -107,7 +107,7 @@
 <meta property="og:site_name" content="zucker团队博客">
 <meta property="og:description" content="kubernetes拥有并行启动，自动扩容，有差别的批量处理和服务生命周期，负载均衡等特性. 下文将介绍k8s(kubernetes)的手动部署过程，更好地了解和学习k8s各个组件。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-08T11:53:23.000Z">
+<meta property="og:updated_time" content="2017-08-10T02:01:58.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于Ubuntu上kubebetes搭建">
 <meta name="twitter:description" content="kubernetes拥有并行启动，自动扩容，有差别的批量处理和服务生命周期，负载均衡等特性. 下文将介绍k8s(kubernetes)的手动部署过程，更好地了解和学习k8s各个组件。">
@@ -489,8 +489,8 @@
 <p>找到flanneld解压出来的mk-docker-opts.sh复制到/user/bin/文件夹下面，并在每台主机执行以下命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mk-docker-opts.sh -i</div><div class="line"><span class="built_in">source</span> /run/flannel/subnet.env</div><div class="line">ifconfig docker0 <span class="variable">$&#123;FLANNEL_SUBNET&#125;</span></div></pre></td></tr></table></figure></p>
 <p>为了持久化配置信息，需要在lib/systemd/system/docker.service的EnvironmentFile和ExecStart变量替换下面配置信息</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">EnvironmentFile=/var/run/flannel/subnet.env</div><div class="line">ExecStart=/usr/bin/dockerd -g /data/docker  --bip=<span class="variable">$&#123;FLANNEL_SUBNET&#125;</span> --mtu=<span class="variable">$&#123;FLANNEL_MTU&#125;</span></div><div class="line">ExecReload=/bin/<span class="built_in">kill</span> -s HUP <span class="variable">$MAINPID</span></div></pre></td></tr></table></figure>
-<p>2.重置iptables（针对master主机）</p>
-<p>为了避免iptable规则的限制，导致主机容器之间ping不通，需要重置iptables规则<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">iptables -F</div><div class="line">iptables -X</div><div class="line">iptables -Z</div><div class="line">iptables -P INPUT ACCEPT</div><div class="line">iptables -P OUTPUT ACCEPT</div><div class="line">iptables -P FORWARD ACCEPT</div></pre></td></tr></table></figure></p>
+<p>2.重置iptables（每台机器都要重置）</p>
+<p>为了避免iptable规则的限制，导致主机容器之间ping不通，需要重置iptables规则<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">iptables -F</div><div class="line">iptables -X</div><div class="line">iptables -Z</div><div class="line">iptables -P INPUT ACCEPT</div><div class="line">iptables -P OUTPUT ACCEPT</div><div class="line">iptables -P FORWARD ACCEPT</div><div class="line">iptables-save</div></pre></td></tr></table></figure></p>
 <p>3.启动和测试<br><strong>启动</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">systemctl daemon-reload</div><div class="line">systemctl <span class="built_in">enable</span> docker</div><div class="line">systemctl restart docker</div></pre></td></tr></table></figure></p>
 <p><strong>测试</strong></p>
 <p>最简单的方法是：在不同的主机上面启动两个容器，然后在容器里面进行ping操作</p>
