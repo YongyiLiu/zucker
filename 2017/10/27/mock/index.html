@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="mock," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/zucker.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Mockito什么是Mockito？Mockito是一个mock测试框架，非常合适做测试，而且，写法非常简洁，通俗易懂，有着很好的可读性。 Mockito发展现状？ Mockito是StackOverflow社区投票最高的，最合适Java做测试。  Mockito在GitHub项目被广泛使用，目前工具排名第四，超过Guava or Spring  Mockito当前受欢迎程度非常高">
+<meta name="keywords" content="mock">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mock">
+<meta property="og:url" content="http://zucker.com.cn/2017/10/27/mock/index.html">
+<meta property="og:site_name" content="zucker团队博客">
+<meta property="og:description" content="Mockito什么是Mockito？Mockito是一个mock测试框架，非常合适做测试，而且，写法非常简洁，通俗易懂，有着很好的可读性。 Mockito发展现状？ Mockito是StackOverflow社区投票最高的，最合适Java做测试。  Mockito在GitHub项目被广泛使用，目前工具排名第四，超过Guava or Spring  Mockito当前受欢迎程度非常高">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-10-27T05:59:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mock">
+<meta name="twitter:description" content="Mockito什么是Mockito？Mockito是一个mock测试框架，非常合适做测试，而且，写法非常简洁，通俗易懂，有着很好的可读性。 Mockito发展现状？ Mockito是StackOverflow社区投票最高的，最合适Java做测试。  Mockito在GitHub项目被广泛使用，目前工具排名第四，超过Guava or Spring  Mockito当前受欢迎程度非常高">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://zucker.com.cn/2017/10/27/mock/"/>
+
+
+
+
+
+  <title>mock | zucker团队博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d6e6c258a3dc428b2bf2d514d0ae32b0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zucker团队博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">有时候，想出去看看。有时候，想出去玩玩。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://zucker.com.cn/2017/10/27/mock/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zucker团队">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/zucker.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zucker团队博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">mock</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-27T13:52:21+08:00">
+                2017-10-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mockito/" itemprop="url" rel="index">
+                    <span itemprop="name">mock</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/10/27/mock/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/10/27/mock/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Mockito"><a href="#Mockito" class="headerlink" title="Mockito"></a>Mockito</h1><h2 id="什么是Mockito？"><a href="#什么是Mockito？" class="headerlink" title="什么是Mockito？"></a>什么是Mockito？</h2><p>Mockito是一个mock测试框架，非常合适做测试，而且，写法非常简洁，通俗易懂，有着很好的可读性。</p>
+<h2 id="Mockito发展现状？"><a href="#Mockito发展现状？" class="headerlink" title="Mockito发展现状？"></a>Mockito发展现状？</h2><ul>
+<li><p>Mockito是StackOverflow社区投票最高的，最合适Java做测试。</p>
+</li>
+<li><p>Mockito在GitHub项目被广泛使用，目前工具排名第四，超过Guava or Spring</p>
+</li>
+<li><p>Mockito当前受欢迎程度非常高</p>
+</li>
+</ul>
+<a id="more"></a>
+<h2 id="Mockito涉及相关知识介绍"><a href="#Mockito涉及相关知识介绍" class="headerlink" title="Mockito涉及相关知识介绍"></a>Mockito涉及相关知识介绍</h2><ul>
+<li><p>@Mock:模拟对象</p>
+</li>
+<li><p>@Spy:监视实际的对象，可以创建实际对象的间谍(spy)。当使用spy时，真实方法被调用(除非方法被存根)。</p>
+</li>
+<li><p>@InjectMocks: injects mock or spy fields into tested object automatically. 见案例29</p>
+</li>
+<li><p>@Captor 参数铺抓器的注解</p>
+</li>
+</ul>
+<h2 id="实践案例"><a href="#实践案例" class="headerlink" title="实践案例"></a>实践案例</h2><h3 id="1-Let’s-verify-some-behaviour-验证某些方法的调用"><a href="#1-Let’s-verify-some-behaviour-验证某些方法的调用" class="headerlink" title="1.Let’s verify some behaviour! 验证某些方法的调用"></a>1.Let’s verify some behaviour! 验证某些方法的调用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//mock creation</span></div><div class="line"> List mockedList = mock(List.class);</div><div class="line"></div><div class="line"> <span class="comment">//using mock object</span></div><div class="line"> mockedList.add(<span class="string">"one"</span>);</div><div class="line"> mockedList.clear();</div><div class="line"></div><div class="line"> <span class="comment">//verification</span></div><div class="line"> verify(mockedList).add(<span class="string">"one"</span>);</div><div class="line"> verify(mockedList).clear();</div></pre></td></tr></table></figure>
+<p><em>一旦创建，mock对象会记住所有的交互。</em></p>
+<h3 id="2-How-about-some-stubbing-模拟返回值（存根）"><a href="#2-How-about-some-stubbing-模拟返回值（存根）" class="headerlink" title="2.How about some stubbing?  模拟返回值（存根）"></a>2.How about some stubbing?  模拟返回值（存根）</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">LinkedList mockedList = mock(LinkedList.class);</div><div class="line"></div><div class="line">when(mockedList.get(<span class="number">0</span>)).thenReturn(<span class="string">"first"</span>);</div><div class="line">when(mockedList.get(<span class="number">1</span>)).thenThrow(<span class="keyword">new</span> RuntimeException());</div><div class="line"></div><div class="line"><span class="comment">//following prints "first"</span></div><div class="line">System.out.println(mockedList.get(<span class="number">0</span>));</div><div class="line"></div><div class="line"><span class="comment">//following throws runtime exception</span></div><div class="line">System.out.println(mockedList.get(<span class="number">1</span>));</div><div class="line"></div><div class="line"><span class="comment">//following prints "null" because get(999) was not stubbed</span></div><div class="line">System.out.println(mockedList.get(<span class="number">999</span>));</div><div class="line"></div><div class="line">verify(mockedList).get(<span class="number">0</span>);</div></pre></td></tr></table></figure>
+<h3 id="3-Argument-matchers-参数匹配器"><a href="#3-Argument-matchers-参数匹配器" class="headerlink" title="3.Argument matchers 参数匹配器"></a>3.Argument matchers 参数匹配器</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">LinkedList mockedList = mock(LinkedList.class);</div><div class="line"><span class="comment">//stubbing using built-in anyInt() argument matcher</span></div><div class="line">when(mockedList.get(anyInt())).thenReturn(<span class="string">"element"</span>);</div><div class="line"></div><div class="line"><span class="comment">//stubbing using custom matcher (let's say isValid() returns your own matcher implementation):</span></div><div class="line">when(mockedList.contains(argThat(isValid()))).thenReturn(<span class="string">"element"</span>);</div><div class="line"></div><div class="line"><span class="comment">//following prints "element"</span></div><div class="line">System.out.println(mockedList.get(<span class="number">999</span>));</div><div class="line"></div><div class="line"><span class="comment">//you can also verify using an argument matcher</span></div><div class="line">verify(mockedList).get(anyInt());</div></pre></td></tr></table></figure>
+<p><em>可设置灵活匹配参数： any(User.class)，匹配任意User对象；anyString()匹配任意字符串；anyInt()匹配任意int型。</em></p>
+<p><em>通过argThat(）进行自定义匹配规则</em></p>
+<h2 id="4-Verifying-exact-number-of-invocations-at-least-x-never-验证调用次数"><a href="#4-Verifying-exact-number-of-invocations-at-least-x-never-验证调用次数" class="headerlink" title="4.Verifying exact number of invocations / at least x / never 验证调用次数"></a>4.Verifying exact number of invocations / at least x / never 验证调用次数</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">LinkedList mockedList = mock(LinkedList.class);</div><div class="line">mockedList.add(<span class="string">"once"</span>);</div><div class="line"></div><div class="line">mockedList.add(<span class="string">"twice"</span>);</div><div class="line">mockedList.add(<span class="string">"twice"</span>);</div><div class="line"></div><div class="line">mockedList.add(<span class="string">"three times"</span>);</div><div class="line">mockedList.add(<span class="string">"three times"</span>);</div><div class="line">mockedList.add(<span class="string">"three times"</span>);</div><div class="line"></div><div class="line"><span class="comment">//调用一次</span></div><div class="line">verify(mockedList).add(<span class="string">"once"</span>);</div><div class="line">verify(mockedList, times(<span class="number">1</span>)).add(<span class="string">"once"</span>);</div><div class="line"></div><div class="line"><span class="comment">//可以定义特定次数</span></div><div class="line">verify(mockedList, times(<span class="number">2</span>)).add(<span class="string">"twice"</span>);</div><div class="line">verify(mockedList, times(<span class="number">3</span>)).add(<span class="string">"three times"</span>);</div><div class="line"></div><div class="line"><span class="comment">//verification using never(). never() is an alias to times(0)</span></div><div class="line">verify(mockedList, never()).add(<span class="string">"never happened"</span>);</div><div class="line"></div><div class="line"><span class="comment">//verification using atLeast()/atMost()</span></div><div class="line">verify(mockedList, atLeastOnce()).add(<span class="string">"three times"</span>);</div><div class="line">verify(mockedList, atLeast(<span class="number">2</span>)).add(<span class="string">"three times"</span>);</div><div class="line">verify(mockedList, atMost(<span class="number">5</span>)).add(<span class="string">"three times"</span>);</div></pre></td></tr></table></figure>
+<p><em>verify(Object).method(arg) 默认是1次</em></p>
+<h2 id="5-Stubbing-void-methods-with-exceptions-指定某些方法的存根是异常类"><a href="#5-Stubbing-void-methods-with-exceptions-指定某些方法的存根是异常类" class="headerlink" title="5.Stubbing void methods with exceptions 指定某些方法的存根是异常类"></a>5.Stubbing void methods with exceptions 指定某些方法的存根是异常类</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">LinkedList mockedList = mock(LinkedList.class);</div><div class="line">doThrow(<span class="keyword">new</span> RuntimeException()).when(mockedList).clear();</div><div class="line"></div><div class="line"><span class="comment">//following throws RuntimeException:</span></div><div class="line">mockedList.clear();</div></pre></td></tr></table></figure>
+<h2 id="6-Verification-in-order-验证方法调用的顺序"><a href="#6-Verification-in-order-验证方法调用的顺序" class="headerlink" title="6.Verification in order  验证方法调用的顺序"></a>6.Verification in order  验证方法调用的顺序</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// A. Single mock whose methods must be invoked in a particular order</span></div><div class="line"> List singleMock = mock(List.class);</div><div class="line"></div><div class="line"> <span class="comment">//using a single mock</span></div><div class="line"> singleMock.add(<span class="string">"was added first"</span>);</div><div class="line"> singleMock.add(<span class="string">"was added second"</span>);</div><div class="line"></div><div class="line"> <span class="comment">//create an inOrder verifier for a single mock</span></div><div class="line"> InOrder inOrder = inOrder(singleMock);</div><div class="line"></div><div class="line"> <span class="comment">//following will make sure that add is first called with "was added first, then with "was added second"</span></div><div class="line"> inOrder.verify(singleMock).add(<span class="string">"was added first"</span>);</div><div class="line"> inOrder.verify(singleMock).add(<span class="string">"was added second"</span>);</div><div class="line"></div><div class="line"> <span class="comment">// B. Multiple mocks that must be used in a particular order</span></div><div class="line"> List firstMock = mock(List.class);</div><div class="line"> List secondMock = mock(List.class);</div><div class="line"></div><div class="line"> <span class="comment">//using mocks</span></div><div class="line"> firstMock.add(<span class="string">"was called first"</span>);</div><div class="line"> secondMock.add(<span class="string">"was called second"</span>);</div><div class="line"></div><div class="line"> <span class="comment">//create inOrder object passing any mocks that need to be verified in order</span></div><div class="line"> InOrder inOrder = inOrder(firstMock, secondMock);</div><div class="line"></div><div class="line"> <span class="comment">//following will make sure that firstMock was called before secondMock</span></div><div class="line"> inOrder.verify(firstMock).add(<span class="string">"was called first"</span>);</div><div class="line"> inOrder.verify(secondMock).add(<span class="string">"was called second"</span>);</div><div class="line"></div><div class="line"> <span class="comment">// Oh, and A + B can be mixed together at will</span></div></pre></td></tr></table></figure>
+<p> <em>同个类不同方法的调用顺序，不同类不同方法调用顺序</em></p>
+<h2 id="7-Making-sure-interaction-s-never-happened-on-mock-确保交互从未在mock对象上发生"><a href="#7-Making-sure-interaction-s-never-happened-on-mock-确保交互从未在mock对象上发生" class="headerlink" title="7. Making sure interaction(s) never happened on mock  确保交互从未在mock对象上发生"></a>7. Making sure interaction(s) never happened on mock  确保交互从未在mock对象上发生</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//使用mock - 仅有mockOne有交互</span></div><div class="line">mockOne.add(<span class="string">"one"</span>);</div><div class="line"></div><div class="line"><span class="comment">//普通验证</span></div><div class="line">verify(mockOne).add(<span class="string">"one"</span>);</div><div class="line"></div><div class="line"><span class="comment">//验证方法从未在mock对象上调用</span></div><div class="line">verify(mockOne, never()).add(<span class="string">"two"</span>);</div><div class="line"></div><div class="line"><span class="comment">//验证其他mock没有交互</span></div><div class="line">verifyZeroInteractions(mockTwo, mockThree);</div></pre></td></tr></table></figure>
+<h2 id="8-Finding-redundant-invocations-发现冗余调用"><a href="#8-Finding-redundant-invocations-发现冗余调用" class="headerlink" title="8. Finding redundant invocations 发现冗余调用"></a>8. Finding redundant invocations 发现冗余调用</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">List mockedList = mock(List.class);</div><div class="line"><span class="comment">//使用mock</span></div><div class="line">mockedList.add(<span class="string">"one"</span>);</div><div class="line">mockedList.add(<span class="string">"two"</span>);</div><div class="line"></div><div class="line">verify(mockedList).add(<span class="string">"one"</span>);</div><div class="line"></div><div class="line"><span class="comment">//下面的验证将会失败</span></div><div class="line"><span class="comment">//verifyNoMoreInteractions(mockedList);</span></div><div class="line"></div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p><em>检测某个对象的方法从来没有被调用过</em></p>
+<h2 id="9-Shorthand-for-mocks-creation-快速创建mock"><a href="#9-Shorthand-for-mocks-creation-快速创建mock" class="headerlink" title="9. Shorthand for mocks creation 快速创建mock"></a>9. Shorthand for mocks creation 快速创建mock</h2><p>使用@MOCK</p>
+<p><em>别忘继承父类的一段代码</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">MockitoAnnotations.initMocks(testClass);</div></pre></td></tr></table></figure></p>
+<h2 id="10-Stubbing-consecutive-calls-连续调用返回不同的值"><a href="#10-Stubbing-consecutive-calls-连续调用返回不同的值" class="headerlink" title="10.Stubbing consecutive calls  连续调用返回不同的值"></a>10.Stubbing consecutive calls  连续调用返回不同的值</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">List mockedList = mock(List.class);</div><div class="line">when(mockedList.get(anyInt()))</div><div class="line">        .thenThrow(<span class="keyword">new</span> RuntimeException())</div><div class="line">        .thenReturn(<span class="string">"hello"</span>);</div><div class="line"></div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    mockedList.get(<span class="number">1</span>);</div><div class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125; <span class="keyword">finally</span> &#123;</div><div class="line">    System.out.println(mockedList.get(<span class="number">1</span>));</div><div class="line">    System.out.println(mockedList.get(<span class="number">1</span>));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><em>如果多次不断的调用，会返回最后一个返回值</em></p>
+<h2 id="11-Stubbing-with-callbacks-带回调的存根"><a href="#11-Stubbing-with-callbacks-带回调的存根" class="headerlink" title="11. Stubbing with callbacks 带回调的存根"></a>11. Stubbing with callbacks 带回调的存根</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">List mockedList = mock(List.class);</div><div class="line">when(mockedList.get(anyInt())).thenAnswer(<span class="keyword">new</span> Answer() &#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">answer</span><span class="params">(InvocationOnMock invocationOnMock)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">        Object[] args = invocationOnMock.getArguments();</div><div class="line">        Object mock = invocationOnMock.getMock();</div><div class="line">        <span class="keyword">return</span> <span class="string">"called with arguments: "</span> + args;</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line">System.out.println(mockedList.get(<span class="number">2</span>));</div></pre></td></tr></table></figure>
+<p><em>用一般的Answer接口做存根</em></p>
+<h2 id="12-doReturn-doThrow-doAnswer-doNothing-doCallRealMethod-family-of-methods-存根另外一种形式"><a href="#12-doReturn-doThrow-doAnswer-doNothing-doCallRealMethod-family-of-methods-存根另外一种形式" class="headerlink" title="12 doReturn()|doThrow()| doAnswer()|doNothing()|doCallRealMethod() family of methods 存根另外一种形式"></a>12 doReturn()|doThrow()| doAnswer()|doNothing()|doCallRealMethod() family of methods 存根另外一种形式</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">List mockedList = mock(List.class);</div><div class="line">doReturn(<span class="string">"hello 佟丽娅！！"</span>).when(mockedList).get(anyInt());</div><div class="line">System.out.println(mockedList.get(<span class="number">1</span>));</div></pre></td></tr></table></figure>
+<h2 id="13-Spying-on-real-objects-监视实际对象"><a href="#13-Spying-on-real-objects-监视实际对象" class="headerlink" title="13.Spying on real objects 监视实际对象"></a>13.Spying on real objects 监视实际对象</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">List list = <span class="keyword">new</span> LinkedList();</div><div class="line">List spy = spy(list);</div><div class="line"></div><div class="line"><span class="comment">//随意的存根某些方法</span></div><div class="line">when(spy.size()).thenReturn(<span class="number">100</span>);</div><div class="line"></div><div class="line"><span class="comment">//使用spy调用真实方法</span></div><div class="line">spy.add(<span class="string">"one"</span>);</div><div class="line">spy.add(<span class="string">"two"</span>);</div><div class="line"></div><div class="line"><span class="comment">//打印 "one" - 列表中的第一个元素</span></div><div class="line">System.out.println(spy.get(<span class="number">0</span>));</div><div class="line"></div><div class="line"><span class="comment">//size() 方法是被存根了的 - 打印100</span></div><div class="line">System.out.println(spy.size());</div><div class="line"></div><div class="line"><span class="comment">//随意验证</span></div><div class="line">verify(spy).add(<span class="string">"one"</span>);</div><div class="line">verify(spy).add(<span class="string">"two"</span>);</div></pre></td></tr></table></figure>
+<p><em>注意提示：</em></p>
+<ul>
+<li><p>使用when(Object) 来做spy的存根是不可能或者行不通的。如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">List list = <span class="keyword">new</span> LinkedList();</div><div class="line">List spy = spy(list);</div><div class="line"></div><div class="line"> <span class="comment">//不可能: 真实方法被调用因此spy.get(0) 会抛出IndexOutOfBoundsException (列表现在还是空的)</span></div><div class="line"> when(spy.get(<span class="number">0</span>)).thenReturn(<span class="string">"foo"</span>);</div><div class="line"></div><div class="line"> <span class="comment">//可以使用 doReturn() 来做存根</span></div><div class="line"> doReturn(<span class="string">"foo"</span>).when(spy).get(<span class="number">0</span>);</div></pre></td></tr></table></figure>
+</li>
+<li><p>创建一个实例的一个拷贝，准确地说：真实实例不会有任何影响</p>
+</li>
+<li>对final方法保持警惕。mockito不mock final方法</li>
+<li>final类、匿名类、java的基本数据类型是无法进行mock或者spy的</li>
+</ul>
+<h2 id="16-Real-partial-mocks-真实部分模拟"><a href="#16-Real-partial-mocks-真实部分模拟" class="headerlink" title="16. Real partial mocks 真实部分模拟"></a>16. Real partial mocks 真实部分模拟</h2><p><em>模拟对象中的真实方法的调用</em></p>
+<h2 id="17-Resetting-mocks-重置mock"><a href="#17-Resetting-mocks-重置mock" class="headerlink" title="17. Resetting mocks  重置mock"></a>17. Resetting mocks  重置mock</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">List mock = mock(List.class);</div><div class="line">when(mock.size()).thenReturn(<span class="number">10</span>);</div><div class="line">mock.add(<span class="number">1</span>);</div><div class="line">System.out.println(mock.size());</div><div class="line">reset(mock);</div><div class="line"><span class="comment">//在这里mock忘记了所有的交互和存根</span></div><div class="line">System.out.println(mock.size());</div></pre></td></tr></table></figure>
+<h2 id="18-Verification-with-timeout-验证超时"><a href="#18-Verification-with-timeout-验证超时" class="headerlink" title="18 Verification with timeout 验证超时"></a>18 Verification with timeout 验证超时</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//passes when someMethod() is called within given time span</span></div><div class="line">verify(mock, timeout(<span class="number">100</span>)).someMethod();</div><div class="line"><span class="comment">//above is an alias to:</span></div><div class="line">verify(mock, timeout(<span class="number">100</span>).times(<span class="number">1</span>)).someMethod();</div><div class="line"></div><div class="line"><span class="comment">//passes when someMethod() is called *exactly* 2 times within given time span</span></div><div class="line">verify(mock, timeout(<span class="number">100</span>).times(<span class="number">2</span>)).someMethod();</div><div class="line"></div><div class="line"><span class="comment">//passes when someMethod() is called *at least* 2 times within given time span</span></div><div class="line">verify(mock, timeout(<span class="number">100</span>).atLeast(<span class="number">2</span>)).someMethod();</div><div class="line"></div><div class="line"><span class="comment">//verifies someMethod() within given time span using given verification mode</span></div><div class="line"><span class="comment">//useful only if you have your own custom verification modes.</span></div><div class="line">verify(mock, <span class="keyword">new</span> Timeout(<span class="number">100</span>, yourOwnVerificationMode)).someMethod();</div></pre></td></tr></table></figure>
+<h2 id="19-参数捕捉"><a href="#19-参数捕捉" class="headerlink" title="19 参数捕捉"></a>19 参数捕捉</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">List list = mock(List.class);</div><div class="line">ArgumentCaptor&lt;String&gt; args = ArgumentCaptor.forClass(String.class);</div><div class="line">list.add(<span class="string">"one"</span>);</div><div class="line"></div><div class="line"><span class="comment">//验证后再捕捉参数</span></div><div class="line">verify(list).add(args.capture());</div><div class="line">System.out.println(args.getAllValues());</div></pre></td></tr></table></figure>
+<h2 id="容易概念混淆的几个点"><a href="#容易概念混淆的几个点" class="headerlink" title="容易概念混淆的几个点"></a>容易概念混淆的几个点</h2><h3 id="Mock与-Spy的异同"><a href="#Mock与-Spy的异同" class="headerlink" title="@Mock与@Spy的异同"></a>@Mock与@Spy的异同</h3><ul>
+<li>Mock对象只能调用stubbed方法，不能调用其真实的方法。而Spy对象可以监视一个真实的对象，对Spy对象进行方法调用时，会调用真实的方法。</li>
+<li>两者都可以stubbing对象的方法，让方法返回我们的期望值。</li>
+<li>两者无论是否是真实的方法调用，都可进行verify验证。</li>
+<li>对final类、匿名类、java的基本数据类型是无法进行mock或者spy的。</li>
+<li>注意mockito是不能mock static方法的。</li>
+</ul>
+<h3 id="InjectMocks与-Mock等的区别"><a href="#InjectMocks与-Mock等的区别" class="headerlink" title="@InjectMocks与@Mock等的区别"></a>@InjectMocks与@Mock等的区别</h3><ul>
+<li>@Mock：创建一个mock对象。</li>
+<li>@InjectMocks：创建一个实例对象，然后将@Mcok或者@Spy注解创建的mock对象注入到该实例对象中。</li>
+</ul>
+<h2 id="when-…-thenReturn-与doReturn-…-when-…-两种语法的异同"><a href="#when-…-thenReturn-与doReturn-…-when-…-两种语法的异同" class="headerlink" title="when(…).thenReturn()与doReturn(…).when(…)两种语法的异同"></a>when(…).thenReturn()与doReturn(…).when(…)两种语法的异同</h2><ul>
+<li>两者都是用来stubbing方法的，大部分情况下，两者可以表达同样的意思，与Java里的do/while、while/do语句类似。</li>
+<li>对void方法不能使用when/thenReturn语法</li>
+<li>对spy对象要慎用when/thenReturn，如：<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">List spyList = spy(<span class="keyword">new</span> ArrayList());</div><div class="line"><span class="comment">//下面代码会抛出IndexOutOfBoundsException</span></div><div class="line">when(spyList.get(<span class="number">0</span>)).thenReturn(<span class="string">"foo"</span>);</div><div class="line"></div><div class="line"><span class="comment">//这里不会抛出异常</span></div><div class="line">doReturn(<span class="string">"foo"</span>).when(spyList).get(<span class="number">0</span>);</div><div class="line">System.out.println(spyList.get(<span class="number">0</span>));</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>##参考文献<br><a href="http://www.voidcn.com/article/p-qkrzniii-zg.html" target="_blank" rel="external">Mockito 中文文档</a><br><a href="http://static.javadoc.io/org.mockito/mockito-core/2.10.0/org/mockito/Mockito.html#partial_mocks" target="_blank" rel="external">Mockito官方文档</a><br><a href="http://www.jianshu.com/p/f6e3ab9719b9" target="_blank" rel="external">使用强大的 Mockito 来测试你的代码</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mockito/" rel="tag"># mock</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/31/pay/" rel="next" title="支付渠道架构">
+                <i class="fa fa-chevron-left"></i> 支付渠道架构
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/zucker.jpg"
+               alt="zucker团队" />
+          <p class="site-author-name" itemprop="name">zucker团队</p>
+           
+              <p class="site-description motion-element" itemprop="description">Think big,but start small.</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/YongyiLiu" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://xiongyingqi.com/" title="琪琪博客" target="_blank">琪琪博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://yecker.com.cn/" title="Yecker博客" target="_blank">Yecker博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Mockito"><span class="nav-number">1.</span> <span class="nav-text">Mockito</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是Mockito？"><span class="nav-number">1.1.</span> <span class="nav-text">什么是Mockito？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mockito发展现状？"><span class="nav-number">1.2.</span> <span class="nav-text">Mockito发展现状？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mockito涉及相关知识介绍"><span class="nav-number">1.3.</span> <span class="nav-text">Mockito涉及相关知识介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实践案例"><span class="nav-number">1.4.</span> <span class="nav-text">实践案例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Let’s-verify-some-behaviour-验证某些方法的调用"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.Let’s verify some behaviour! 验证某些方法的调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-How-about-some-stubbing-模拟返回值（存根）"><span class="nav-number">1.4.2.</span> <span class="nav-text">2.How about some stubbing?  模拟返回值（存根）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Argument-matchers-参数匹配器"><span class="nav-number">1.4.3.</span> <span class="nav-text">3.Argument matchers 参数匹配器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Verifying-exact-number-of-invocations-at-least-x-never-验证调用次数"><span class="nav-number">1.5.</span> <span class="nav-text">4.Verifying exact number of invocations / at least x / never 验证调用次数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Stubbing-void-methods-with-exceptions-指定某些方法的存根是异常类"><span class="nav-number">1.6.</span> <span class="nav-text">5.Stubbing void methods with exceptions 指定某些方法的存根是异常类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-Verification-in-order-验证方法调用的顺序"><span class="nav-number">1.7.</span> <span class="nav-text">6.Verification in order  验证方法调用的顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-Making-sure-interaction-s-never-happened-on-mock-确保交互从未在mock对象上发生"><span class="nav-number">1.8.</span> <span class="nav-text">7. Making sure interaction(s) never happened on mock  确保交互从未在mock对象上发生</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-Finding-redundant-invocations-发现冗余调用"><span class="nav-number">1.9.</span> <span class="nav-text">8. Finding redundant invocations 发现冗余调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-Shorthand-for-mocks-creation-快速创建mock"><span class="nav-number">1.10.</span> <span class="nav-text">9. Shorthand for mocks creation 快速创建mock</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-Stubbing-consecutive-calls-连续调用返回不同的值"><span class="nav-number">1.11.</span> <span class="nav-text">10.Stubbing consecutive calls  连续调用返回不同的值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-Stubbing-with-callbacks-带回调的存根"><span class="nav-number">1.12.</span> <span class="nav-text">11. Stubbing with callbacks 带回调的存根</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-doReturn-doThrow-doAnswer-doNothing-doCallRealMethod-family-of-methods-存根另外一种形式"><span class="nav-number">1.13.</span> <span class="nav-text">12 doReturn()|doThrow()| doAnswer()|doNothing()|doCallRealMethod() family of methods 存根另外一种形式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-Spying-on-real-objects-监视实际对象"><span class="nav-number">1.14.</span> <span class="nav-text">13.Spying on real objects 监视实际对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-Real-partial-mocks-真实部分模拟"><span class="nav-number">1.15.</span> <span class="nav-text">16. Real partial mocks 真实部分模拟</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#17-Resetting-mocks-重置mock"><span class="nav-number">1.16.</span> <span class="nav-text">17. Resetting mocks  重置mock</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#18-Verification-with-timeout-验证超时"><span class="nav-number">1.17.</span> <span class="nav-text">18 Verification with timeout 验证超时</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#19-参数捕捉"><span class="nav-number">1.18.</span> <span class="nav-text">19 参数捕捉</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容易概念混淆的几个点"><span class="nav-number">1.19.</span> <span class="nav-text">容易概念混淆的几个点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mock与-Spy的异同"><span class="nav-number">1.19.1.</span> <span class="nav-text">@Mock与@Spy的异同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#InjectMocks与-Mock等的区别"><span class="nav-number">1.19.2.</span> <span class="nav-text">@InjectMocks与@Mock等的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#when-…-thenReturn-与doReturn-…-when-…-两种语法的异同"><span class="nav-number">1.20.</span> <span class="nav-text">when(…).thenReturn()与doReturn(…).when(…)两种语法的异同</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zucker团队</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://zucker.com.cn/2017/10/27/mock/';
+          this.page.identifier = '2017/10/27/mock/';
+          this.page.title = 'mock';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('-1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'manual') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
